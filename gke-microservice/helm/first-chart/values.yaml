@@ -1,0 +1,10 @@
+replicaCount: 2
+containerName: hello-pod
+image:
+  repository: parthkulkarni998/ms-gke
+  pullPolicy: IfNotPresent
+  tag: "0.0.4"
+
+service:
+  type: LoadBalancer
+  port: 9090
