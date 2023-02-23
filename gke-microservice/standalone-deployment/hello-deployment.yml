@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello-pod
+          image: parthkulkarni998/ms-gke:0.0.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+              name: "http"
+      imagePullSecrets:
+        - name: regcred2

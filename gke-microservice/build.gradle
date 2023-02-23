@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.google.cloud.tools.jib' version '3.1.4'
 }
 
 group = 'com.example'
@@ -19,4 +20,23 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = 'azul/zulu-openjdk:11-jre'
+	}
+	to {
+		image 'registry.hub.docker.com/parthkulkarni998/ms-gke:0.0.4'
+		auth {
+			username = "parthkulkarni998"
+			password = "Yash@1234"
+		}
+	}
+	container {
+		mainClass = 'com.example.gke.microservice.GkeMicroserviceApplication'
+		creationTime = 'USE_CURRENT_TIMESTAMP'
+		ports = ['9090/tcp']
+		format = 'Docker'
+	}
 }
